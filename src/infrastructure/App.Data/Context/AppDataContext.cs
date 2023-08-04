@@ -18,5 +18,7 @@ namespace App.Data.Context
             modelBuilder.UseSerialColumns();
         }
         public DbSet<Todo> Todo { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<Workblog> Workblog { get; set; }
     }
 }

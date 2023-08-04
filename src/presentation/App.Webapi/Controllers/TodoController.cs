@@ -1,5 +1,7 @@
-﻿using App.Application.TodoService.Interfaces;
+﻿using App.Application.Common.Interfaces;
+using App.Application.Dtos.Todo;
 using App.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,30 +22,45 @@ namespace App.Webapi.Controllers
         {
             _todo = todo;
         }
-
+        
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var response = await _todo.GetAllTodo();
             return Ok(response);
         }
+
+        [Authorize]
         [HttpPost]
-        public async Task<IActionResult> CreateTodo([FromBody] Todo todo)
+        public async Task<IActionResult> CreateTodo([FromBody] CreateTodoRequest todo)
         {
             var response = await _todo.AddTodo(todo);
             return Ok(response);
         }
+
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTodo([FromRoute] int id)
         {
             var response = await _todo.DeleteTodo(id);
             return Ok(response);
         }
+
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateTodo([FromBody ] Todo todo,[FromRoute] int id)
         {
             var response = await _todo.UpdateTodo(todo, id);
             return Ok(response);
         }
+
+
+        [HttpGet("Deneme")]
+        public async Task<IActionResult> Deneme()
+        {
+            
+            return Ok("çalıştı");
+        }
+
     }
 }
